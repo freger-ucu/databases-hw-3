@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::header}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <title>Bills</title>
+  </head>
+  <body>
+    <header>Bills</header>
+    <section>
+      <table class="table table-sm table-striped align-middle">
+        <thead>
+          <tr>
+            <th>bill_number</th>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Submitted by government</th>
+            <th>Submission date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="b : ${bills}">
+            <td><code th:text="${b.billNumber}">5001-DL</code></td>
+            <td th:text="${b.billTitle}">Title</td>
+            <td th:text="${b.billType}">DraftLaw</td>
+            <td th:text="${b.governmentName} ?: '—'">Cabinet</td>
+            <td th:text="${b.submissionDate}">2025-08-15</td>
+            <td>
+              <a class="btn btn-sm btn-outline-primary"
+                 th:href="@{'/bill/' + ${b.billNumber} + '/renumber'}">
+                Renumber (Form 2)
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </body>
+</html>

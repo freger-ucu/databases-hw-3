@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::header}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <title>Bill Renumbering Notice</title>
+  </head>
+  <body>
+    <header>Bill Renumbering Notice (Form 2)</header>
+    <section>
+      <p class="text-muted">
+        Mirrors the Step 1 Bill Renumbering Notice. Submitting this
+        form executes <code>UPDATE bill SET bill_number = ?</code>. The
+        change cascades via <code>ON UPDATE CASCADE</code> to
+        <code>draft_law</code>, <code>resolution</code>,
+        <code>appeal</code>, <code>amendment</code>,
+        <code>authors</code>, and <code>votes_on</code>.
+      </p>
+
+      <div class="alert alert-secondary">
+        <div><strong>Current bill_number:</strong>
+          <code th:text="${bill.billNumber}">5001-DL</code>
+        </div>
+        <div><strong>Title:</strong>
+          <span th:text="${bill.billTitle}"></span>
+        </div>
+        <div><strong>Type:</strong>
+          <span th:text="${bill.billType}"></span>
+        </div>
+      </div>
+
+      <form th:action="@{'/bill/' + ${bill.billNumber} + '/renumber'}"
+            method="post" class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label" for="newBillNumber">
+            new_bill_number
+          </label>
+          <input type="text" class="form-control" id="newBillNumber"
+                 name="newBillNumber" placeholder="5001-DL-1"
+                 required />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label" for="effectiveDate">
+            effective_date
+          </label>
+          <input type="date" class="form-control" id="effectiveDate"
+                 name="effectiveDate" required />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label" for="registrarRefNo">
+            registrar_ref_no
+          </label>
+          <input type="text" class="form-control" id="registrarRefNo"
+                 name="registrarRefNo" placeholder="RR-2024-04231"
+                 required />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label" for="rationale">
+            rationale
+          </label>
+          <input type="text" class="form-control" id="rationale"
+                 name="rationale"
+                 placeholder="subtype reclassification" />
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">
+            Apply renumbering (cascade)
+          </button>
+          <a class="btn btn-outline-secondary ms-2" th:href="@{/bill}">
+            Cancel
+          </a>
+        </div>
+      </form>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::header}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <title>Deputy Enrollment Form</title>
+  </head>
+  <body>
+    <header>Deputy Enrollment Form (Form 1)</header>
+    <section>
+      <p class="text-muted">
+        Mirrors the Step 1 Deputy Enrollment Form. Submitting this form
+        executes <code>INSERT INTO deputy</code> with foreign-key
+        validation on <code>opposition_faction</code> and
+        <code>electoral_district</code>.
+      </p>
+      <form th:action="@{/deputy/create}" method="post" class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label" for="deputyId">deputy_id</label>
+          <input type="number" class="form-control" id="deputyId"
+                 name="deputyId" required />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label" for="firstName">first_name</label>
+          <input type="text" class="form-control" id="firstName"
+                 name="firstName" required />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label" for="lastName">last_name</label>
+          <input type="text" class="form-control" id="lastName"
+                 name="lastName" required />
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label" for="birthDate">birth_date</label>
+          <input type="date" class="form-control" id="birthDate"
+                 name="birthDate" />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label" for="enrollmentDate">enrollment_date</label>
+          <input type="date" class="form-control" id="enrollmentDate"
+                 name="enrollmentDate" required />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label" for="factionRegistrationId">
+            faction_registration_id
+          </label>
+          <select class="form-select" id="factionRegistrationId"
+                  name="factionRegistrationId" required>
+            <option value="">Select a faction</option>
+            <option th:each="f : ${factions}"
+                    th:value="${f.factionRegistrationId}"
+                    th:text="${f.factionRegistrationId + ' — ' + f.factionName}">
+              1 — Faction
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="electoralDistrictNumber">
+            electoral_district_number
+          </label>
+          <select class="form-select" id="electoralDistrictNumber"
+                  name="electoralDistrictNumber" required>
+            <option value="">Select a district</option>
+            <option th:each="d : ${districts}"
+                    th:value="${d.districtNumber}"
+                    th:text="${d.districtNumber + ' — ' + d.districtName}">
+              42 — District
+            </option>
+          </select>
+        </div>
+
+        <div class="col-12">
+          <button type="submit" class="btn btn-success">
+            Submit enrollment
+          </button>
+          <a class="btn btn-outline-secondary ms-2" th:href="@{/deputy}">
+            Cancel
+          </a>
+        </div>
+      </form>
+    </section>
+  </body>
+</html>

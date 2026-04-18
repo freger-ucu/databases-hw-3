@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html th:fragment="layout (title, page_header, content)"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title th:replace="${title}">Parlop Secretariat</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  </head>
+  <body class="bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-body border-bottom shadow-sm">
+      <div class="container">
+        <a class="navbar-brand fw-semibold" th:href="@{/}">
+          Opposition Faction Secretariat
+        </a>
+        <div>
+          <a class="btn btn-sm btn-outline-secondary me-2" th:href="@{/deputy}">
+            Deputies
+          </a>
+          <a class="btn btn-sm btn-outline-secondary" th:href="@{/bill}">
+            Bills
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container py-4">
+      <div class="card shadow-sm">
+        <div class="card-body p-4 p-lg-5">
+          <h1 class="display-6 mb-4">
+            <span th:replace="${page_header}">Page header</span>
+          </h1>
+
+          <div class="alert alert-success" role="alert"
+               th:if="${successMessage}">
+            <span th:text="${successMessage}">Action completed.</span>
+          </div>
+          <div class="alert alert-danger" role="alert"
+               th:if="${errorMessage}">
+            <span th:text="${errorMessage}">Something went wrong.</span>
+          </div>
+
+          <div th:replace="${content}">Layout content</div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

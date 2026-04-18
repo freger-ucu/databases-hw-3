@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::header}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <title>Error</title>
+  </head>
+  <body>
+    <header>Something went wrong</header>
+    <section>
+      <p class="lead">An error occurred while processing your request.</p>
+      <a class="btn btn-primary" th:href="@{/}">Back to the Secretariat home page</a>
+    </section>
+  </body>
+</html>

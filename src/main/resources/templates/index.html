@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::header}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <title>Opposition Faction Secretariat</title>
+  </head>
+  <body>
+    <header>Opposition Faction Secretariat</header>
+    <section>
+      <p class="lead">
+        Three data-manipulation forms corresponding to the three input
+        documents identified in Step 1 of the HW3 report.
+      </p>
+      <div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">Form 1: Add a deputy</h5>
+              <p class="card-text">
+                Register a new deputy into a faction. Drives an INSERT
+                on <code>deputy</code> with foreign-key validation on
+                <code>opposition_faction</code> and
+                <code>electoral_district</code>.
+              </p>
+              <a class="btn btn-success" th:href="@{/deputy/create}">
+                Open Deputy Enrollment Form
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">Form 2: Renumber a bill</h5>
+              <p class="card-text">
+                Rename a bill's primary key. Drives an UPDATE on
+                <code>bill.bill_number</code> that cascades to six
+                dependent tables via <code>ON UPDATE CASCADE</code>.
+              </p>
+              <a class="btn btn-primary" th:href="@{/bill}">
+                Pick a bill to renumber
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">Form 3: Terminate a mandate</h5>
+              <p class="card-text">
+                Remove a deputy. Drives a DELETE on <code>deputy</code>
+                that cascades to <code>authors</code> and
+                <code>votes_on</code> via
+                <code>ON DELETE CASCADE</code>.
+              </p>
+              <a class="btn btn-danger" th:href="@{/deputy}">
+                Pick a deputy to terminate
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::header}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <title>Deputies</title>
+  </head>
+  <body>
+    <header>Deputies</header>
+    <section>
+      <div class="mb-3">
+        <a class="btn btn-success" th:href="@{/deputy/create}">
+          Add new deputy (Form 1)
+        </a>
+      </div>
+      <table class="table table-sm table-striped align-middle">
+        <thead>
+          <tr>
+            <th>deputy_id</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Birth date</th>
+            <th>Faction</th>
+            <th>Enrollment date</th>
+            <th>District</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="d : ${deputies}">
+            <td th:text="${d.deputyId}">101</td>
+            <td th:text="${d.firstName}">First</td>
+            <td th:text="${d.lastName}">Last</td>
+            <td th:text="${d.birthDate}">1970-01-01</td>
+            <td th:text="${d.factionRegistrationId}">1</td>
+            <td th:text="${d.enrollmentDate}">2019-08-29</td>
+            <td th:text="${d.electoralDistrictNumber}">42</td>
+            <td>
+              <a class="btn btn-sm btn-outline-danger"
+                 th:href="@{'/deputy/' + ${d.deputyId} + '/delete'}">
+                Terminate mandate (Form 3)
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::header}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <title>Mandate Termination Notice</title>
+  </head>
+  <body>
+    <header>Mandate Termination Notice (Form 3)</header>
+    <section>
+      <p class="text-muted">
+        Mirrors the Step 1 Mandate Termination Notice. Submitting this
+        form executes <code>DELETE FROM deputy</code>; rows in
+        <code>authors</code> and <code>votes_on</code> for the same
+        deputy are removed via <code>ON DELETE CASCADE</code>.
+      </p>
+
+      <div class="alert alert-secondary">
+        <div><strong>deputy_id:</strong> <span th:text="${deputy.deputyId}"></span></div>
+        <div><strong>Name:</strong>
+          <span th:text="${deputy.firstName + ' ' + deputy.lastName}"></span>
+        </div>
+        <div><strong>Faction:</strong>
+          <span th:text="${deputy.factionRegistrationId}"></span>
+        </div>
+      </div>
+
+      <form th:action="@{'/deputy/' + ${deputy.deputyId} + '/delete'}"
+            method="post" class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label" for="terminationDate">
+            termination_date
+          </label>
+          <input type="date" class="form-control" id="terminationDate"
+                 name="terminationDate" required />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label" for="registrarRefNo">
+            registrar_ref_no
+          </label>
+          <input type="text" class="form-control" id="registrarRefNo"
+                 name="registrarRefNo" placeholder="RR-2025-00815"
+                 required />
+        </div>
+        <div class="col-12">
+          <label class="form-label" for="terminationReason">
+            termination_reason
+          </label>
+          <input type="text" class="form-control" id="terminationReason"
+                 name="terminationReason"
+                 placeholder="voluntary resignation" required />
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-danger">
+            Confirm termination (cascade)
+          </button>
+          <a class="btn btn-outline-secondary ms-2" th:href="@{/deputy}">
+            Cancel
+          </a>
+        </div>
+      </form>
+    </section>
+  </body>
+</html>
