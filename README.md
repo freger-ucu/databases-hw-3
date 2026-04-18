@@ -26,16 +26,27 @@ environment variables (defaults shown):
 
 ```
 DB_URL      jdbc:mysql://localhost:3306/parlop_db
-DB_USER     root
-DB_PASSWORD secret
+DB_USER     parlop_app
+DB_PASSWORD parlop_dev_2026
 ```
 
-Override any of them if your local MySQL uses different values:
+The app connects as a dedicated `parlop_app` MySQL user so the root
+password is not needed. Create that user once (in DataGrip or any
+MySQL client that can authenticate as root):
+
+```sql
+CREATE USER 'parlop_app'@'localhost' IDENTIFIED BY 'parlop_dev_2026';
+GRANT ALL PRIVILEGES ON parlop_db.* TO 'parlop_app'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+Override any of the three via environment variable if your setup
+differs:
 
 ```sh
 export DB_URL='jdbc:mysql://localhost:3306/parlop_db'
-export DB_USER='root'
-export DB_PASSWORD='your-real-password'
+export DB_USER='parlop_app'
+export DB_PASSWORD='parlop_dev_2026'
 ```
 
 ## Run
