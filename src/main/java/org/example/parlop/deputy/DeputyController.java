@@ -3,6 +3,7 @@ package org.example.parlop.deputy;
 import java.time.LocalDate;
 import org.example.parlop.district.ElectoralDistrictRepository;
 import org.example.parlop.faction.OppositionFactionRepository;
+import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,13 +25,16 @@ public class DeputyController {
     private final DeputyRepository deputyRepo;
     private final OppositionFactionRepository factionRepo;
     private final ElectoralDistrictRepository districtRepo;
+    private final JdbcAggregateTemplate jdbc;
 
     public DeputyController(DeputyRepository deputyRepo,
                             OppositionFactionRepository factionRepo,
-                            ElectoralDistrictRepository districtRepo) {
+                            ElectoralDistrictRepository districtRepo,
+                            JdbcAggregateTemplate jdbc) {
         this.deputyRepo = deputyRepo;
         this.factionRepo = factionRepo;
         this.districtRepo = districtRepo;
+        this.jdbc = jdbc;
     }
 
     // ---------- listing ----------
@@ -85,7 +89,11 @@ public class DeputyController {
         d.setEnrollmentDate(enrollmentDate);
         d.setElectoralDistrictNumber(electoralDistrictNumber);
 
-        deputyRepo.save(d);
+        // The PK is user-supplied (natural key), so force an INSERT
+        // via JdbcAggregateTemplate. CrudRepository.save() would
+        // issue UPDATE WHERE deputy_id=? because Spring Data JDBC
+        // treats a non-null @Id as "entity already exists".
+        jdbc.insert(d);
         flash.addFlashAttribute("successMessage",
             "Deputy " + firstName + " " + lastName + " (id " + deputyId +
             ") enrolled into faction " + factionRegistrationId + ".");
