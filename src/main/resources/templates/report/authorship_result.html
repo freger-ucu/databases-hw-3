@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::header}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <title>Authorship Digest</title>
+  </head>
+  <body>
+    <header>Authorship Digest</header>
+    <section>
+      <p class="text-muted">
+        <strong>Filter:</strong>
+        <code>bill_type = <span th:text="${billType}">DraftLaw</span></code>
+      </p>
+
+      <div th:if="${#lists.isEmpty(rows)}"
+           class="alert alert-warning">
+        No bills of type
+        <code th:text="${billType}">X</code> were found.
+      </div>
+
+      <table th:unless="${#lists.isEmpty(rows)}"
+             class="table table-sm table-striped align-middle">
+        <thead>
+          <tr>
+            <th>Bill number</th>
+            <th>Title</th>
+            <th th:text="${subtypeLabel}">subtype_attr</th>
+            <th>Authors</th>
+            <th>Submitted</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="r : ${rows}">
+            <td th:text="${r.billNumber}">BN-001</td>
+            <td th:text="${r.billTitle}">Bill title</td>
+            <td th:text="${r.subtypeAttr}">subtype</td>
+            <td th:text="${r.authors}">Author 1, Author 2</td>
+            <td th:text="${r.submissionDate}">2024-01-01</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="mt-3">
+        <a class="btn btn-outline-secondary"
+           th:href="@{/report/authorship}">Run for another bill type</a>
+        <a class="btn btn-outline-secondary ms-2" th:href="@{/report}">
+          Back to reports
+        </a>
+      </div>
+    </section>
+  </body>
+</html>

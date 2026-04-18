@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::header}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <title>Faction Registry Certificate</title>
+  </head>
+  <body>
+    <header>Faction Registry Certificate (Report 1)</header>
+    <section>
+      <p class="text-muted">
+        Mirrors the Step 1 Faction Registry Certificate. Selecting a
+        faction pipelines a single-row SELECT with
+        <code>LEFT JOIN</code> to
+        <code>political_party</code> and
+        <code>government</code>, a scalar subquery for deputy count,
+        and a second SELECT for the multi-valued
+        <code>faction_phone</code>.
+      </p>
+      <form th:action="@{/report/registry/view}" method="get" class="row g-3">
+        <div class="col-md-8">
+          <label class="form-label" for="factionId">faction_registration_id</label>
+          <select class="form-select" id="factionId"
+                  name="factionId" required>
+            <option value="">Select a faction</option>
+            <option th:each="f : ${factions}"
+                    th:value="${f.factionRegistrationId}"
+                    th:text="${f.factionRegistrationId + ' -- ' + f.factionName}">
+              1 -- Faction
+            </option>
+          </select>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">
+            Generate certificate
+          </button>
+          <a class="btn btn-outline-secondary ms-2" th:href="@{/report}">
+            Cancel
+          </a>
+        </div>
+      </form>
+    </section>
+  </body>
+</html>

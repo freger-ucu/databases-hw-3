@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::header}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <title>Faction Registry Certificate</title>
+  </head>
+  <body>
+    <header>Faction Registry Certificate</header>
+    <section>
+      <p class="text-muted">
+        Issued by Opposition Faction Secretariat on
+        <span th:text="${issueDate}">2026-04-18</span>.
+      </p>
+
+      <div class="border rounded p-4 bg-white">
+        <table class="table table-sm table-borderless mb-0">
+          <tbody>
+            <tr>
+              <th class="text-nowrap" style="width: 16rem;">Faction name</th>
+              <td th:text="${cert.factionName}">Faction Name</td>
+            </tr>
+            <tr>
+              <th>Registration identifier</th>
+              <td th:text="${cert.factionRegistrationId}">1</td>
+            </tr>
+            <tr>
+              <th>Founding date</th>
+              <td th:text="${cert.foundingDate}">2019-08-29</td>
+            </tr>
+            <tr>
+              <th>Ideology</th>
+              <td th:text="${cert.ideology}">Ideology</td>
+            </tr>
+            <tr>
+              <th>Headquarters address</th>
+              <td>
+                <span th:text="${cert.hqCity}">City</span>,
+                <span th:text="${cert.hqStreet}">Street</span>,
+                <span th:text="${cert.hqBuildingNo}">No</span>
+              </td>
+            </tr>
+            <tr>
+              <th>Contact phones</th>
+              <td>
+                <span th:if="${#lists.isEmpty(phones)}" class="text-muted">
+                  (none on file)
+                </span>
+                <span th:each="p, it : ${phones}">
+                  <span th:text="${p}">+380...</span><span
+                        th:if="${!it.last}">, </span>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th>Affiliated political party</th>
+              <td>
+                <span th:text="${cert.partyName}">Party Name</span>
+                (<span th:text="${cert.partyRegistrationNumber}">REG</span>)
+              </td>
+            </tr>
+            <tr>
+              <th>Opposed government</th>
+              <td>
+                <span th:if="${cert.governmentName}"
+                      th:text="${cert.governmentName + ' (' + cert.primeMinisterName + ')'}">
+                  Government (PM)
+                </span>
+                <span th:unless="${cert.governmentName}" class="text-muted">
+                  (not opposing any government)
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th>Deputy count</th>
+              <td th:text="${cert.deputyCount}">0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-4">
+        <a class="btn btn-outline-secondary"
+           th:href="@{/report/registry}">Run for another faction</a>
+        <a class="btn btn-outline-secondary ms-2" th:href="@{/report}">
+          Back to reports
+        </a>
+      </div>
+    </section>
+  </body>
+</html>

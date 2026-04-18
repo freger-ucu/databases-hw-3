@@ -9,9 +9,11 @@
     <section>
       <p class="lead">
         Three data-manipulation forms corresponding to the three input
-        documents identified in Step 1 of the HW3 report.
+        documents identified in Step 1 of the HW3 report, plus three
+        reports corresponding to the three output documents.
       </p>
-      <div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
+      <h2 class="h5 mt-4 mb-2 text-muted">Forms (Step 7)</h2>
+      <div class="row row-cols-1 row-cols-md-3 g-4 mt-0">
         <div class="col">
           <div class="card h-100">
             <div class="card-body">
@@ -55,6 +57,60 @@
               </p>
               <a class="btn btn-danger" th:href="@{/deputy}">
                 Pick a deputy to terminate
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="h5 mt-5 mb-2 text-muted">Reports (Step 8)</h2>
+      <div class="row row-cols-1 row-cols-md-3 g-4 mt-0">
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">Report 1: Faction Registry Certificate</h5>
+              <p class="card-text">
+                Single-faction certificate joining
+                <code>opposition_faction</code> to
+                <code>political_party</code>,
+                <code>government</code>, and
+                <code>faction_phone</code>, with a scalar subquery
+                for deputy count.
+              </p>
+              <a class="btn btn-primary" th:href="@{/report/registry}">
+                Generate registry certificate
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">Report 2: Faction Voting Discipline</h5>
+              <p class="card-text">
+                Per-deputy aggregation over <code>votes_on</code>
+                joined to <code>deputy</code>, filtered by faction
+                and session-date range.
+              </p>
+              <a class="btn btn-primary" th:href="@{/report/discipline}">
+                Generate discipline report
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">Report 3: Authorship Digest</h5>
+              <p class="card-text">
+                Per-bill listing filtered by
+                <code>bill_type</code>, with subtype-attribute
+                dispatch via <code>CASE</code> and authors
+                concatenated via
+                <code>GROUP_CONCAT</code>.
+              </p>
+              <a class="btn btn-primary" th:href="@{/report/authorship}">
+                Generate authorship digest
               </a>
             </div>
           </div>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::header}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <title>Faction Voting Discipline Report</title>
+  </head>
+  <body>
+    <header>Faction Voting Discipline Report (Report 2)</header>
+    <section>
+      <p class="text-muted">
+        Mirrors the Step 1 Faction Voting Discipline Report.
+        Submitting this form pipelines a <code>GROUP BY</code>
+        aggregation over <code>votes_on</code> joined to
+        <code>deputy</code>, filtered by
+        <code>faction_registration_id</code> and session-date range.
+      </p>
+      <form th:action="@{/report/discipline/view}" method="get" class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label" for="factionId">faction_registration_id</label>
+          <select class="form-select" id="factionId"
+                  name="factionId" required>
+            <option value="">Select a faction</option>
+            <option th:each="f : ${factions}"
+                    th:value="${f.factionRegistrationId}"
+                    th:text="${f.factionRegistrationId + ' -- ' + f.factionName}">
+              1 -- Faction
+            </option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label" for="from">session_date from</label>
+          <input type="date" class="form-control" id="from"
+                 name="from" required />
+        </div>
+        <div class="col-md-3">
+          <label class="form-label" for="to">session_date to</label>
+          <input type="date" class="form-control" id="to"
+                 name="to" required />
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">
+            Generate discipline report
+          </button>
+          <a class="btn btn-outline-secondary ms-2" th:href="@{/report}">
+            Cancel
+          </a>
+        </div>
+      </form>
+    </section>
+  </body>
+</html>

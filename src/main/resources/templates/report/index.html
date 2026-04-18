@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::header}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <title>Reports</title>
+  </head>
+  <body>
+    <header>Reports</header>
+    <section>
+      <p class="lead">
+        Three reports corresponding to the three output documents
+        identified in Step 1 of the HW3 report.
+      </p>
+      <div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">Report 1: Faction Registry Certificate</h5>
+              <p class="card-text">
+                Single-faction certificate joining
+                <code>opposition_faction</code> to
+                <code>political_party</code>,
+                <code>government</code>, and
+                <code>faction_phone</code>, with a scalar subquery
+                for deputy count.
+              </p>
+              <a class="btn btn-primary" th:href="@{/report/registry}">
+                Open registry report
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">Report 2: Faction Voting Discipline</h5>
+              <p class="card-text">
+                Per-deputy aggregation over <code>votes_on</code>
+                joined to <code>deputy</code>, filtered by faction
+                and session-date range. Shows cast counts, vote
+                distribution, and a discipline proxy.
+              </p>
+              <a class="btn btn-primary" th:href="@{/report/discipline}">
+                Open discipline report
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">Report 3: Authorship Digest</h5>
+              <p class="card-text">
+                Per-bill listing filtered by
+                <code>bill_type</code>, with subtype-attribute
+                dispatch via <code>CASE</code> and authors
+                concatenated via
+                <code>GROUP_CONCAT</code>.
+              </p>
+              <a class="btn btn-primary" th:href="@{/report/authorship}">
+                Open authorship report
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

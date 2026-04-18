@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::header}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <title>Authorship Digest</title>
+  </head>
+  <body>
+    <header>Authorship Digest by Bill Type (Report 3)</header>
+    <section>
+      <p class="text-muted">
+        Mirrors the Step 1 Authorship Digest template. Submitting
+        this form pipelines a multi-join over <code>bill</code>,
+        <code>authors</code>, <code>deputy</code>, and the three
+        generalization subtype tables
+        (<code>draft_law</code>, <code>resolution</code>,
+        <code>appeal</code>), with subtype-attribute dispatch via
+        <code>CASE</code>.
+      </p>
+      <form th:action="@{/report/authorship/view}" method="get" class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label" for="billType">bill_type</label>
+          <select class="form-select" id="billType"
+                  name="billType" required>
+            <option value="">Select a bill type</option>
+            <option value="DraftLaw">DraftLaw (reading_stage)</option>
+            <option value="Resolution">Resolution (scope)</option>
+            <option value="Appeal">Appeal (addressee)</option>
+          </select>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">
+            Generate authorship digest
+          </button>
+          <a class="btn btn-outline-secondary ms-2" th:href="@{/report}">
+            Cancel
+          </a>
+        </div>
+      </form>
+    </section>
+  </body>
+</html>

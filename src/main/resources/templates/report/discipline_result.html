@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::header}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <title>Faction Voting Discipline Report</title>
+  </head>
+  <body>
+    <header>Faction Voting Discipline Report</header>
+    <section>
+      <p class="mb-1">
+        <strong>Faction:</strong>
+        <span th:text="${factionName}">Faction</span>
+        (<span th:text="${factionId}">1</span>)
+      </p>
+      <p class="text-muted">
+        <strong>Period:</strong>
+        <span th:text="${dateFrom}">2022-01-01</span>
+        to
+        <span th:text="${dateTo}">2026-04-18</span>
+      </p>
+
+      <div th:if="${#lists.isEmpty(rows)}"
+           class="alert alert-warning">
+        No votes were cast by any deputy of this faction in the
+        selected session-date range.
+      </div>
+
+      <table th:unless="${#lists.isEmpty(rows)}"
+             class="table table-sm table-striped align-middle">
+        <thead>
+          <tr>
+            <th>Deputy</th>
+            <th class="text-end">Votes cast</th>
+            <th class="text-end">% for</th>
+            <th class="text-end">% against</th>
+            <th class="text-end">% abstain</th>
+            <th class="text-end">Discipline</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="r : ${rows}">
+            <td th:text="${r.fullName()}">First Last</td>
+            <td class="text-end" th:text="${r.votesCast}">0</td>
+            <td class="text-end"
+                th:text="${#numbers.formatDecimal(r.pctFor, 1, 1)}">0.0</td>
+            <td class="text-end"
+                th:text="${#numbers.formatDecimal(r.pctAgainst, 1, 1)}">0.0</td>
+            <td class="text-end"
+                th:text="${#numbers.formatDecimal(r.pctAbstain, 1, 1)}">0.0</td>
+            <td class="text-end"
+                th:text="${#numbers.formatDecimal(r.discipline, 1, 1)}">0.0</td>
+          </tr>
+        </tbody>
+        <tfoot th:if="${factionTotal.votesCast > 0}">
+          <tr class="table-secondary fw-semibold">
+            <td>Faction total</td>
+            <td class="text-end" th:text="${factionTotal.votesCast}">0</td>
+            <td class="text-end"
+                th:text="${#numbers.formatDecimal(factionTotal.pctFor, 1, 1)}">0.0</td>
+            <td class="text-end"
+                th:text="${#numbers.formatDecimal(factionTotal.pctAgainst, 1, 1)}">0.0</td>
+            <td class="text-end"
+                th:text="${#numbers.formatDecimal(factionTotal.pctAbstain, 1, 1)}">0.0</td>
+            <td class="text-end"
+                th:text="${#numbers.formatDecimal(factionTotal.discipline, 1, 1)}">0.0</td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <p class="small text-muted mt-2">
+        Discipline is reported as
+        <code>MAX(pct_for, pct_against, pct_abstain)</code>, a
+        voting-concentration proxy: a deputy who always casts the
+        same choice scores 100.0; a three-way split scores about
+        33.3.
+      </p>
+
+      <div class="mt-3">
+        <a class="btn btn-outline-secondary"
+           th:href="@{/report/discipline}">Run with other parameters</a>
+        <a class="btn btn-outline-secondary ms-2" th:href="@{/report}">
+          Back to reports
+        </a>
+      </div>
+    </section>
+  </body>
+</html>
